@@ -18,11 +18,11 @@ class DrilldownBarChartWidget(FigureCanvas):
         self.fig.clear()
         ax = self.fig.add_subplot(111)
         df_month = self.df.copy()
-        df_month['YearMonth'] = df_month['Date'].dt.to_period('M')
-        grouped = df_month.groupby('YearMonth')['Amount'].sum()
+        df_month['YearMonth'] = df_month['date'].dt.to_period('M')
+        grouped = df_month.groupby('YearMonth')['amount'].sum()
         bars = ax.bar([str(p) for p in grouped.index], grouped.values, color='#4a90e2')
         ax.set_title('Total by Month')
-        ax.set_ylabel('Amount')
+        ax.set_ylabel('amount')
         ax.set_xlabel('Month')
         ax.tick_params(axis='x', rotation=45)
         self.level = 'month'
@@ -35,12 +35,12 @@ class DrilldownBarChartWidget(FigureCanvas):
     def plot_week(self, yearmonth):
         self.fig.clear()
         ax = self.fig.add_subplot(111)
-        df_month = self.df[self.df['Date'].dt.to_period('M') == yearmonth]
-        df_month['Week'] = df_month['Date'].dt.isocalendar().week
-        grouped = df_month.groupby('Week')['Amount'].sum()
+        df_month = self.df[self.df['date'].dt.to_period('M') == yearmonth]
+        df_month['Week'] = df_month['date'].dt.isocalendar().week
+        grouped = df_month.groupby('Week')['amount'].sum()
         bars = ax.bar([f"Week {w}" for w in grouped.index], grouped.values, color='#50e3c2')
         ax.set_title(f'Total by Week: {yearmonth}')
-        ax.set_ylabel('Amount')
+        ax.set_ylabel('amount')
         ax.set_xlabel('Week')
         self.level = 'week'
         self.current = yearmonth
@@ -52,12 +52,12 @@ class DrilldownBarChartWidget(FigureCanvas):
     def plot_day(self, yearmonth, week):
         self.fig.clear()
         ax = self.fig.add_subplot(111)
-        df_month = self.df[self.df['Date'].dt.to_period('M') == yearmonth]
-        df_week = df_month[df_month['Date'].dt.isocalendar().week == week]
-        grouped = df_week.groupby(df_week['Date'].dt.day)['Amount'].sum()
+        df_month = self.df[self.df['date'].dt.to_period('M') == yearmonth]
+        df_week = df_month[df_month['date'].dt.isocalendar().week == week]
+        grouped = df_week.groupby(df_week['date'].dt.day)['amount'].sum()
         bars = ax.bar([str(d) for d in grouped.index], grouped.values, color='#f5a623')
         ax.set_title(f'Total by Day: {yearmonth}, Week {week}')
-        ax.set_ylabel('Amount')
+        ax.set_ylabel('amount')
         ax.set_xlabel('Day')
         self.level = 'day'
         self.current = (yearmonth, week)

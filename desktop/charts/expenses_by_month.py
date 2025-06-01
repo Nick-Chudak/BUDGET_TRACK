@@ -19,8 +19,8 @@ class ExpensesByMonthChart(FigureCanvas):
         self.ax.clear()
         # Prepare data
         df = self.df.copy()
-        df['Month'] = df['Date'].dt.month
-        grouped = df.groupby('Month')['Amount'].sum()
+        df['Month'] = df['date'].dt.month
+        grouped = df.groupby('Month')['amount'].sum()
         months = [month for month in range(1, 13)]
         values = [grouped.get(m, 0) for m in months]
         labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
