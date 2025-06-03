@@ -5,6 +5,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QFont
 from desktop.services.metrics import total_earned, total_spent, savings
 
+
 def create_summary_card(title, value, subtitle):
     card = QFrame()
     card.setFixedSize(220, 130)
@@ -37,16 +38,23 @@ def create_summary_card(title, value, subtitle):
 
 
 def create_summary_section(df):
-    # Main widget
-    summary_widget = QWidget()
-    summary_layout = QVBoxLayout(summary_widget)
-    summary_layout.setContentsMargins(0, 0, 0, 0)
-    summary_layout.setSpacing(16)
-    summary_widget.setFixedHeight(220)
+    # --- Main section widget ---
+    section = QWidget()
+    layout = QHBoxLayout(section)
+    layout.setContentsMargins(0, 0, 0, 0)
+    layout.setSpacing(0)
+    section.setFixedHeight(220)
 
-    # Horizontal tab bar
+    # --- Left: Horizontal tabs container ---
+    tab_container = QWidget()
+    tab_layout = QVBoxLayout(tab_container)
+    tab_layout.setContentsMargins(12, 12, 12, 12)
+    tab_layout.setSpacing(0)
+
     tab_bar = QTabBar()
     tab_bar.setExpanding(False)
+    tab_bar.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+
     for name in ["Expenses", "Earnings", "Savings", "Investments"]:
         tab_bar.addTab(name)
 
@@ -54,33 +62,37 @@ def create_summary_section(df):
         QTabBar::tab {
             background: #F7F7F7;
             color: #000000;
-            padding: 8px 16px;
+            padding: 10px 16px;
             margin-right: 8px;
             border-radius: 8px;
             font-family: 'Intel', 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
+            font-size: 13px;
         }
         QTabBar::tab:selected {
             background: #FFFFFF;
             font-weight: bold;
         }
     """)
-    summary_layout.addWidget(tab_bar)
 
-    # Summary cards row
-    summary_cards_widget = QWidget()
-    summary_cards_layout = QHBoxLayout(summary_cards_widget)
-    summary_cards_layout.setSpacing(32)
-    summary_cards_layout.setContentsMargins(8, 0, 0, 0)
+    tab_layout.addWidget(tab_bar, alignment=Qt.AlignmentFlag.AlignLeft)
+    tab_container.setFixedWidth(300)  # Approx. 1/3 screen
+    layout.addWidget(tab_container, 1)
 
-    summary_cards_layout.addWidget(create_summary_card("Total Earned", total_earned(df), "+20% month over month"))
-    summary_cards_layout.addWidget(create_summary_card("Total Spending", total_spent(df), "+33% month over month"))
-    summary_cards_layout.addWidget(create_summary_card("Savings", savings(df), "-8% month over month"))
+    # --- Right: Summary cards ---
+    cards_container = QWidget()
+    cards_layout = QHBoxLayout(cards_container)
+    cards_layout.setSpacing(32)
+    cards_layout.setContentsMargins(16, 16, 16, 16)
 
-    summary_cards_widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
-    summary_cards_widget.setStyleSheet("background: #FFFFFF;")
-    summary_layout.addWidget(summary_cards_widget)
+    cards_layout.addWidget(create_summary_card("Total Earned", total_earned(df), "+20% month over month"))
+    cards_layout.addWidget(create_summary_card("Total Spending", total_spent(df), "+33% month over month"))
+    cards_layout.addWidget(create_summary_card("Savings", savings(df), "-8% month over month"))
 
-    return summary_widget
+    cards_container.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+    cards_container.setStyleSheet("background: #FFFFFF;")
+    layout.addWidget(cards_container, 2)
+
+    return section
 
 
 def create_recent_expenses_widget(df, max_rows=100):

@@ -61,58 +61,14 @@ class DashboardWindow(QMainWindow):
             print("header_widget added")
 
 
-           # --- Main summary section container ---
-            summary_widget = QWidget()
-            summary_layout = QHBoxLayout(summary_widget)
+            # --- Main summary section container ---
+            summary_layout = QHBoxLayout()
             summary_layout.setContentsMargins(0, 0, 0, 0)
             summary_layout.setSpacing(0)
-            summary_widget.setFixedHeight(220)
-
-            # --- Left: Tabs ---
-            tab_widget = QTabWidget()
-            tab_widget.setTabPosition(QTabWidget.TabPosition.West)
-            tab_widget.setFixedWidth(200)
-            tab_widget.setStyleSheet("""
-                QTabWidget::pane {
-                    background: #F7F7F7;
-                    border: none;
-                }
-                QTabBar::tab {
-                    background: #F7F7F7;
-                    color: #000000;
-                    font-family: 'Intel', 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
-                    padding: 12px;
-                    margin: 2px 0;
-                    border: none;
-                }
-                QTabBar::tab:selected {
-                    background: #FFFFFF;
-                }
-            """)
-
-            # Add empty tabs (content can be added later)
-            for name in ["Expenses", "Earnings", "Savings", "Investments"]:
-                tab_widget.addTab(QWidget(), name)
-
-            summary_layout.addWidget(tab_widget, 1)
-
-            # --- Right: Summary Cards ---
-            summary_cards_widget = QWidget()
-            summary_cards_layout = QHBoxLayout(summary_cards_widget)
-            summary_cards_layout.setSpacing(16)
-            summary_cards_layout.setContentsMargins(16, 16, 16, 16)
-
-            summary_cards_layout.addWidget(create_summary_card("Total Earned", total_earned(df), "+20% month over month"))
-            summary_cards_layout.addWidget(create_summary_card("Total Spending", total_spent(df), "+33% month over month"))
-            summary_cards_layout.addWidget(create_summary_card("Savings", savings(df), "-8% month over month"))
-
-            summary_cards_widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
-            summary_cards_widget.setStyleSheet("background: #FFFFFF;")
-            summary_layout.addWidget(summary_cards_widget, 2)
 
             # --- Add to main layout ---
             main_layout.addWidget(create_summary_section(df))
-            print("summary_widget added")
+            print("sumary cards added")
 
 
             # 3. Dashboard area (Expenses chart 2/3, Recent transactions 1/3)
