@@ -1,6 +1,6 @@
 # Personal Budget Tracker
 
-A comprehensive personal budgeting application that combines data analytics, machine learning, and modern software architecture to provide intelligent financial management.
+A comprehensive personal budgeting application that combines data analytics, machine learning, and modern software architecture to provide intelligent financial management
 
 ## Features
 
@@ -74,5 +74,3 @@ pytest
 ```
 
 ## License
-
-MIT 
