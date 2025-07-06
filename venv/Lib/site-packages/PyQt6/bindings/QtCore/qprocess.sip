@@ -186,6 +186,12 @@ public:
     void setProgram(const QString &program);
     QStringList arguments() const;
     void setArguments(const QStringList &arguments);
+%If (Windows)
+    void setNativeArguments(const QString &arguments);
+%End
+%If (Windows)
+    QString nativeArguments() const;
+%End
     virtual bool open(QIODeviceBase::OpenMode mode = QIODeviceBase::ReadWrite) /ReleaseGIL/;
 
     enum InputChannelMode

@@ -27,7 +27,7 @@ class QLocale
 %End
 
 public:
-    enum Language
+    enum Language : ushort
     {
         C,
         Abkhazian,
@@ -436,7 +436,7 @@ public:
 %End
     };
 
-    enum Country
+    enum Country : ushort
     {
         AnyCountry,
 %If (Qt_6_2_0 -)
@@ -748,7 +748,7 @@ public:
 
 %If (Qt_6_7_0 -)
 
-    enum class TagSeparator
+    enum class TagSeparator : char
     {
         Dash,
         Underscore,
@@ -887,7 +887,7 @@ public:
     QString pmText() const;
     Qt::LayoutDirection textDirection() const;
 
-    enum Script
+    enum Script : ushort
     {
         AnyScript,
         ArabicScript,

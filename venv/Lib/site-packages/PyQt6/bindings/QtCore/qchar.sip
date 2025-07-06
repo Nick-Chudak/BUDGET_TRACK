@@ -211,13 +211,27 @@ public:
         Script_DivesAkuru,
         Script_KhitanSmallScript,
         Script_Yezidi,
+%If (Qt_6_3_0 -)
         Script_CyproMinoan,
-        Script_OldUyghur,
-        Script_Tangsa,
-        Script_Toto,
-        Script_Vithkuqi,
-        Script_Kawi,
+%End
+%If (Qt_6_3_0 -)
         Script_NagMundari,
+%End
+%If (Qt_6_3_0 -)
+        Script_OldUyghur,
+%End
+%If (Qt_6_3_0 -)
+        Script_Tangsa,
+%End
+%If (Qt_6_3_0 -)
+        Script_Toto,
+%End
+%If (Qt_6_3_0 -)
+        Script_Vithkuqi,
+%End
+%If (Qt_6_5_0 -)
+        Script_Kawi,
+%End
 %If (Qt_6_9_0 -)
         Script_Garay,
 %End
